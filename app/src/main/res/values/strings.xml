@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">LocationsDemo</string>
     <string name="location">Location</string>
+    <string name="signin">Sign In</string>
+    <string name="signinDesc">Please place your fingertip on the scanner to verify your identity</string>
+    <string name="sucessfullyLogedIn">You have successfully logged in with fingerprint authentication</string>
+    <string name="generateCode">Generate code</string>
 </resources>
