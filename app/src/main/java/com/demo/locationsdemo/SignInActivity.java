@@ -43,16 +43,14 @@ public class SignInActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
 
-     // Initializing both Android Keyguard Manager and Fingerprint Manager
-     KeyguardManager keyguardManager = (KeyguardManager) getSystemService(KEYGUARD_SERVICE);
-     FingerprintManager fingerprintManager = (FingerprintManager) getSystemService(FINGERPRINT_SERVICE);
+        // Initializing both Android Keyguard Manager and Fingerprint Manager
+        KeyguardManager keyguardManager = (KeyguardManager) getSystemService(KEYGUARD_SERVICE);
+        FingerprintManager fingerprintManager = (FingerprintManager) getSystemService(FINGERPRINT_SERVICE);
 
+        textView = (TextView) findViewById(R.id.errorTextView);
 
-     textView = (TextView) findViewById(R.id.errorTextView);
-
-
-     // Check whether the device has a Fingerprint sensor.
-      if(!fingerprintManager.isHardwareDetected()){
+        // Check whether the device has a Fingerprint sensor.
+         if(!fingerprintManager.isHardwareDetected()){
             /**
              * An error message will be displayed if the device does not contain the fingerprint hardware.
              * However if you plan to implement a default authentication method,
@@ -62,10 +60,12 @@ public class SignInActivity extends AppCompatActivity {
              * startActivity(intent);
              */
             textView.setText("Your Device does not have a Fingerprint Sensor");
-        }else {
+         }else {
+
             // Checks whether fingerprint permission is set on manifest
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.USE_FINGERPRINT) != PackageManager.PERMISSION_GRANTED) {
                 textView.setText("Fingerprint authentication permission not enabled");
+                //todo ask for permission
             }else{
                 // Check whether at least one fingerprint is registered
                 if (!fingerprintManager.hasEnrolledFingerprints()) {
@@ -76,7 +76,6 @@ public class SignInActivity extends AppCompatActivity {
                         textView.setText("Lock screen security not enabled in Settings");
                     }else{
                         generateKey();
-
 
                         if (cipherInit()) {
                             FingerprintManager.CryptoObject cryptoObject = new FingerprintManager.CryptoObject(cipher);
