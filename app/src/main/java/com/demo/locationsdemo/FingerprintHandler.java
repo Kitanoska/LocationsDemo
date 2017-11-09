@@ -10,6 +10,7 @@ import android.os.CancellationSignal;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -19,14 +20,12 @@ import android.widget.TextView;
 
 public class FingerprintHandler extends FingerprintManager.AuthenticationCallback {
 
+    private final String TAG = this.getClass().getName();
     private Context context;
 
-
-    // Constructor
     public FingerprintHandler(Context mContext) {
         context = mContext;
     }
-
 
     public void startAuth(FingerprintManager manager, FingerprintManager.CryptoObject cryptoObject) {
         CancellationSignal cancellationSignal = new CancellationSignal();
@@ -39,19 +38,19 @@ public class FingerprintHandler extends FingerprintManager.AuthenticationCallbac
 
     @Override
     public void onAuthenticationError(int errMsgId, CharSequence errString) {
-        this.update("Fingerprint Authentication error\n" + errString, false);
+        this.update(context.getString(R.string.fingerprintAuthenticationError) + errString, false);
     }
 
 
     @Override
     public void onAuthenticationHelp(int helpMsgId, CharSequence helpString) {
-        this.update("Fingerprint Authentication help\n" + helpString, false);
+        this.update(context.getString(R.string.fingerprintAuthenticationHelp) + helpString, false);
     }
 
 
     @Override
     public void onAuthenticationFailed() {
-        this.update("Fingerprint Authentication failed. Try again.", false);
+        this.update(context.getString(R.string.fingerprintAuthenticationFailed), false);
     }
 
 
@@ -59,7 +58,7 @@ public class FingerprintHandler extends FingerprintManager.AuthenticationCallbac
     public void onAuthenticationSucceeded(FingerprintManager.AuthenticationResult result) {
         Intent generateCodeActivity = new Intent(context,GenerateCodeActivity.class);
         context.startActivity(generateCodeActivity);
-        //this.update("Fingerprint Authentication succeeded.", true);
+        Log.i(TAG,"Fingerprint Authentication succeeded.");
     }
 
 
@@ -67,9 +66,6 @@ public class FingerprintHandler extends FingerprintManager.AuthenticationCallbac
         TextView textView = (TextView) ((Activity)context).findViewById(R.id.errorTextView);
         textView.setText(e);
         textView.setVisibility(View.VISIBLE);
-        /*if(success){
-            textView.setTextColor(ContextCompat.getColor(context,R.color.colorPrimaryDark));
-        }*/
     }
 
 }

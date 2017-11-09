@@ -1,17 +1,27 @@
 package com.demo.locationsdemo;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-public class UsersDataActivity extends AppCompatActivity {
+import com.demo.locationsdemo.Presenters.UsersDataPresenter;
+import com.demo.locationsdemo.Views.UsersDataView;
+
+public class UsersDataActivity extends AppCompatActivity implements UsersDataView {
+
+    private final String TAG = this.getClass().getName();
 
     Button confirmDataBtn;
     EditText firstNameEditTxt, lastNameEditTxt, cardNumEditTxt, pinEditTxt;
-    String firstName, lastName, cardNumber, pinNumber;
+    String firstName, lastName, cardNumber;
+    Integer pinNumber;
+
+    private UsersDataPresenter usersDataPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +44,10 @@ public class UsersDataActivity extends AppCompatActivity {
                     firstName = String.valueOf(firstNameEditTxt.getText());
                     lastName = String.valueOf(lastNameEditTxt.getText());
                     cardNumber = String.valueOf(cardNumEditTxt.getText());
-                    pinNumber = String.valueOf(pinEditTxt.getText());
+
+                    pinNumber = Integer.parseInt(String.valueOf(pinEditTxt.getText()));
+
+                    usersDataPresenter.saveUsersData(firstName, lastName, cardNumber, pinNumber);
                 }
             }
         });
@@ -47,5 +60,15 @@ public class UsersDataActivity extends AppCompatActivity {
         cardNumEditTxt = (EditText) findViewById(R.id.cardNumEditTxt);
         pinEditTxt = (EditText) findViewById(R.id.pinEditTxt);
         confirmDataBtn = (Button) findViewById(R.id.nextBtn);
+    }
+
+    /**
+     * If users data is successfully saved then next screen is displayed
+     */
+    @Override
+    public void openNextScreen() {
+        Intent generateCodeActivity = new Intent(this,GenerateCodeActivity.class);
+        startActivity(generateCodeActivity);
+        Log.i(TAG,"Fingerprint Authentication succeeded.");
     }
 }

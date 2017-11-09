@@ -1,23 +1,33 @@
-package com.demo.locationsdemo.Model;
+package com.demo.locationsdemo.Entity;
+
+import android.arch.persistence.room.ColumnInfo;
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.PrimaryKey;
 
 /**
- * Created by Natalija on 11/5/2017.
+ * Created by Natalija on 11/9/2017.
  */
 
-public class ATM {
+@Entity(tableName = "atm")
+public class ATMEntity {
 
-    private Integer id;
+    @PrimaryKey(autoGenerate = true)
+    private int id;
+
+    @ColumnInfo(name = "longitude")
     private String longitude;
+
+    @ColumnInfo(name = "latitude")
     private String latitude;
+
+    @ColumnInfo(name = "name")
     private String name;
 
-    public ATM(){}
-
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -44,5 +54,4 @@ public class ATM {
     public void setName(String name) {
         this.name = name;
     }
-
 }
