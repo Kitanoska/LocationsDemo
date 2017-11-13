@@ -8,8 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
-import com.demo.locationsdemo.Presenters.UsersDataPresenter;
+import com.demo.locationsdemo.Presenters.UsersDataPresenterImpl;
 import com.demo.locationsdemo.Views.UsersDataView;
 
 public class UsersDataActivity extends AppCompatActivity implements UsersDataView {
@@ -21,12 +20,14 @@ public class UsersDataActivity extends AppCompatActivity implements UsersDataVie
     String firstName, lastName, cardNumber;
     Integer pinNumber;
 
-    private UsersDataPresenter usersDataPresenter;
+    private UsersDataPresenterImpl usersDataPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_users_data);
+
+        usersDataPresenter = new UsersDataPresenterImpl(this);
 
         initViews();
 
@@ -67,6 +68,7 @@ public class UsersDataActivity extends AppCompatActivity implements UsersDataVie
      */
     @Override
     public void openNextScreen() {
+        ApplicationClass.firstUserDataEntered();
         Intent generateCodeActivity = new Intent(this,GenerateCodeActivity.class);
         startActivity(generateCodeActivity);
         Log.i(TAG,"Fingerprint Authentication succeeded.");

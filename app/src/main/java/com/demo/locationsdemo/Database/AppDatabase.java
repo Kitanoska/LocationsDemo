@@ -14,7 +14,7 @@ import com.demo.locationsdemo.Entity.UserEntity;
  * Created by Natalija on 11/9/2017.
  */
 
-@Database(entities = {UserEntity.class, ATMEntity.class}, version = 1)
+@Database(entities = {UserEntity.class, ATMEntity.class}, version = 1, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase{
 
         private static AppDatabase INSTANCE;
@@ -25,7 +25,7 @@ public abstract class AppDatabase extends RoomDatabase{
         public static AppDatabase getAppDatabase(Context context) {
             if (INSTANCE == null) {
                 INSTANCE =
-                        Room.databaseBuilder(context.getApplicationContext(), AppDatabase.class, "user-database")
+                        Room.databaseBuilder(context.getApplicationContext(), AppDatabase.class, "demo-database")
                                 // allow queries on the main thread.
                                 // Don't do this on a real app! See PersistenceBasicSample for an example.
                                 //.allowMainThreadQueries()

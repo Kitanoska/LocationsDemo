@@ -6,7 +6,7 @@ import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.Query;
 
 import com.demo.locationsdemo.Entity.UserEntity;
-import com.demo.locationsdemo.Model.User;
+import com.demo.locationsdemo.Entity.UserEntity;
 
 import java.util.List;
 
@@ -24,5 +24,5 @@ public interface UserDao {
     void insertUsersData(UserEntity user);
 
     @Insert
-    void insertAll(User... users);
+    void insertAll(UserEntity... users);
 }

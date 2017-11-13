@@ -35,39 +35,39 @@ public class FingerprintHandler extends FingerprintManager.AuthenticationCallbac
         manager.authenticate(cryptoObject, cancellationSignal, 0, this, null);
     }
 
-
     @Override
     public void onAuthenticationError(int errMsgId, CharSequence errString) {
         this.update(context.getString(R.string.fingerprintAuthenticationError) + errString, false);
     }
-
 
     @Override
     public void onAuthenticationHelp(int helpMsgId, CharSequence helpString) {
         this.update(context.getString(R.string.fingerprintAuthenticationHelp) + helpString, false);
     }
 
-
     @Override
     public void onAuthenticationFailed() {
         this.update(context.getString(R.string.fingerprintAuthenticationFailed), false);
     }
 
-
     @Override
     public void onAuthenticationSucceeded(FingerprintManager.AuthenticationResult result) {
-        Intent generateCodeActivity = new Intent(context,GenerateCodeActivity.class);
-        context.startActivity(generateCodeActivity);
         Log.i(TAG,"Fingerprint Authentication succeeded.");
-    }
+        if(ApplicationClass.isAppFirstStarted()) {
+            Intent userDataActivity = new Intent(context, UsersDataActivity.class);
+            context.startActivity(userDataActivity);
+        }else{
+            Intent generateCodeActivity = new Intent(context, GenerateCodeActivity.class);
+            context.startActivity(generateCodeActivity);
+        }
 
+    }
 
     public void update(String e, Boolean success){
         TextView textView = (TextView) ((Activity)context).findViewById(R.id.errorTextView);
         textView.setText(e);
         textView.setVisibility(View.VISIBLE);
     }
-
 }
 
 

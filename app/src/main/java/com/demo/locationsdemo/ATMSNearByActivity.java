@@ -23,6 +23,7 @@ public class ATMSNearByActivity extends AppCompatActivity {
         //setSupportActionBar(toolbar);
 
         initViews();
+        //load ams from db
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

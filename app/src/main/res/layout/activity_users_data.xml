@@ -15,11 +15,6 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1">
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
         android:orientation="vertical"
         android:layout_weight="1">
 
@@ -27,7 +22,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="Enter your data:"
+            android:hint="Enter your data:"
             android:textColor="@android:color/white"
             android:textSize="@dimen/fontSize1"
             >
@@ -41,7 +36,7 @@
             android:ems="10"
             android:inputType="textPersonName"
             android:textColor="@android:color/white"
-            android:text="First Name" />
+            android:hint="First Name" />
 
         <EditText
             android:id="@+id/lastNameEditTxt"
@@ -51,7 +46,7 @@
             android:ems="10"
             android:inputType="textPersonName"
             android:textColor="@android:color/white"
-            android:text="Last Name" />
+            android:hint="Last Name" />
 
         <EditText
             android:id="@+id/cardNumEditTxt"
@@ -61,7 +56,7 @@
             android:ems="10"
             android:inputType="textPersonName"
             android:textColor="@android:color/white"
-            android:text="Card number"
+            android:hint="Card number"
             />
 
         <EditText
@@ -72,7 +67,7 @@
             android:ems="10"
             android:inputType="textPersonName"
             android:textColor="@android:color/white"
-            android:text="Card number"
+            android:hint="Pin"
             />
 
         <Button
