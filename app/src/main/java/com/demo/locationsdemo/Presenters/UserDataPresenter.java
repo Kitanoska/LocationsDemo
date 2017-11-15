@@ -5,4 +5,6 @@ package com.demo.locationsdemo.Presenters;
  */
 
 public interface UserDataPresenter {
+
+    public void saveUsersData(String firstName, String lastName, String cardNo, Integer pin);
 }

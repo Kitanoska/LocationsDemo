@@ -1,5 +1,6 @@
 package com.demo.locationsdemo;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -19,7 +20,11 @@ public class GenerateCodeActivity extends AppCompatActivity {
         generateCodeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                generatedCodeTextView.setText("390951");
+                //generatedCodeTextView.setText("390951");
+                Intent atmsActivity = new Intent(getBaseContext(), ATMSNearByActivity.class);
+                startActivity(atmsActivity);
+                //TODO
+                //odabrati i prikazati one u krugu od 20m
             }
         });
     }

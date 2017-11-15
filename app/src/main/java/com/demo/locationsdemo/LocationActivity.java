@@ -27,6 +27,8 @@ import android.support.v4.app.ActivityCompat;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.demo.locationsdemo.Helpers.BoundLocationManager;
+
 public class LocationActivity extends LifecycleActivity {
 
     private static final int REQUEST_LOCATION_PERMISSION_CODE = 1;

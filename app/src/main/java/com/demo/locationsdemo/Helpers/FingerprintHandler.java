@@ -1,4 +1,4 @@
-package com.demo.locationsdemo;
+package com.demo.locationsdemo.Helpers;
 
 import android.Manifest;
 import android.app.Activity;
@@ -13,6 +13,10 @@ import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+
+import com.demo.locationsdemo.GenerateCodeActivity;
+import com.demo.locationsdemo.R;
+import com.demo.locationsdemo.UsersDataActivity;
 
 /**
  * Created by Natalija on 11/1/2017.

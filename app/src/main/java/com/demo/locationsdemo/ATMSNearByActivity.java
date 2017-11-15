@@ -6,14 +6,23 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import com.demo.locationsdemo.Adapters.ListATMAdapter;
+import com.demo.locationsdemo.Entity.ATMEntity;
 import com.demo.locationsdemo.Model.ATM;
+import com.demo.locationsdemo.Presenters.ATMPresenter;
+import com.demo.locationsdemo.Presenters.ATMPresenterImpl;
+import com.demo.locationsdemo.Presenters.UsersDataPresenterImpl;
+import com.demo.locationsdemo.Views.ATMView;
+
 import java.util.ArrayList;
+import java.util.List;
 
-public class ATMSNearByActivity extends AppCompatActivity {
+public class ATMSNearByActivity extends AppCompatActivity implements ATMView {
 
-    ArrayList<ATM> listATMs = new ArrayList<>();
+    List<ATM> listATMs = new ArrayList<>();
     ListView listView;
     ListATMAdapter listATMAdapter;
+
+    private ATMPresenterImpl atmPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +33,8 @@ public class ATMSNearByActivity extends AppCompatActivity {
 
         initViews();
         //load ams from db
+        atmPresenter = new ATMPresenterImpl(this);
+        atmPresenter.getAllATM();
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -37,8 +48,15 @@ public class ATMSNearByActivity extends AppCompatActivity {
     }
 
     private void initViews() {
-        ListATMAdapter adapter = new ListATMAdapter(this,0, listATMs);
+
         listView = (ListView) findViewById(R.id.atmsListView);
-        listView.setAdapter(adapter);
+
+    }
+
+    @Override
+    public void displayListOfATMs(List<ATM> atmList) {
+        listATMAdapter = new ListATMAdapter(this,0, listATMs);
+        listView.setAdapter(listATMAdapter);
+        listATMAdapter.notifyDataSetChanged();
     }
 }

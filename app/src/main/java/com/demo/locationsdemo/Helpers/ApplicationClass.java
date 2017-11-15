@@ -1,4 +1,4 @@
-package com.demo.locationsdemo;
+package com.demo.locationsdemo.Helpers;
 
 import android.app.Application;
 import android.content.Context;

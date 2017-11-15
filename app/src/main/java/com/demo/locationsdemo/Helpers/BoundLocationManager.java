@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.demo.locationsdemo;
+package com.demo.locationsdemo.Helpers;
 
 import android.arch.lifecycle.Lifecycle;
 import android.arch.lifecycle.LifecycleObserver;

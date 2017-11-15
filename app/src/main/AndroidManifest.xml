@@ -9,7 +9,7 @@
     <uses-feature android:name="android.hardware.location.gps" />
 
     <application
-        android:name=".ApplicationClass"
+        android:name=".Helpers.ApplicationClass"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -41,9 +41,11 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ATMSNearByActivity"
-            android:label="@string/title_activity_atmsnear_by"
-            android:theme="@style/AppTheme"></activity>
+            android:name=".ATMSNearByActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

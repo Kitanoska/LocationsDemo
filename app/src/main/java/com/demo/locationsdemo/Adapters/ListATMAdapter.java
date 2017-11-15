@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.demo.locationsdemo.Model.ATM;
 import com.demo.locationsdemo.R;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Natalija on 11/5/2017.
@@ -20,10 +21,10 @@ import java.util.ArrayList;
 public class ListATMAdapter extends ArrayAdapter<ATM> {
 
     private Activity activity;
-    private ArrayList<ATM> listATMs;
+    private List<ATM> listATMs;
     private static LayoutInflater inflater = null;
 
-    public ListATMAdapter(@NonNull Context context, int resource, ArrayList<ATM> list) {
+    public ListATMAdapter(@NonNull Context context, int resource, List<ATM> list) {
         super(context, resource, list);
 
         try {

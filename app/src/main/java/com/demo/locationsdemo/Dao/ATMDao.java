@@ -18,6 +18,7 @@ import java.util.List;
 @Dao
 public interface ATMDao {
 
+
     @Query("SELECT * FROM atm")
     List<ATMEntity> getAll();
 

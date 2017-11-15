@@ -1,9 +1,8 @@
 package com.demo.locationsdemo.Presenters;
 
-import android.content.Context;
 import android.os.AsyncTask;
 
-import com.demo.locationsdemo.ApplicationClass;
+import com.demo.locationsdemo.Helpers.ApplicationClass;
 import com.demo.locationsdemo.Database.AppDatabase;
 import com.demo.locationsdemo.Entity.UserEntity;
 import com.demo.locationsdemo.Views.UsersDataView;
@@ -20,6 +19,7 @@ public class UsersDataPresenterImpl implements UserDataPresenter{
         usersDataView = usrDataView;
     }
 
+    @Override
     public void saveUsersData(String firstName, String lastName, String cardNo, Integer pin){
 
         final UserEntity user = new UserEntity();
