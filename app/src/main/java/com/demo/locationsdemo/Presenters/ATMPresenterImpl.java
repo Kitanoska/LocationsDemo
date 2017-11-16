@@ -7,6 +7,7 @@ import com.demo.locationsdemo.Helpers.ApplicationClass;
 import com.demo.locationsdemo.Database.AppDatabase;
 import com.demo.locationsdemo.Entity.ATMEntity;
 import com.demo.locationsdemo.Model.ATM;
+import com.demo.locationsdemo.Model.User;
 import com.demo.locationsdemo.Views.ATMView;
 
 import java.io.IOException;
@@ -49,4 +50,21 @@ public class ATMPresenterImpl implements  ATMPresenter{
 
         atmView.displayListOfATMs(atmsList);
     }
+
+    @Override
+    public User getUser() {
+        DatabaseAccess databaseAccess = DatabaseAccess.getInstance(ApplicationClass.getContext());
+        try {
+            databaseAccess.open();
+        } catch (IOException e) {
+            e.printStackTrace();
+            //TODO
+            //usersDataView.displayError();
+        }
+        User user = databaseAccess.getUser();
+        databaseAccess.close();
+
+        return user;
+    }
+
 }

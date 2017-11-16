@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,12 +21,14 @@ import java.util.List;
 
 public class ListATMAdapter extends ArrayAdapter<ATM> {
 
+    public final String TAG = this.getClass().getName();
+
     private Activity activity;
     private List<ATM> listATMs;
     private static LayoutInflater inflater = null;
 
-    public ListATMAdapter(@NonNull Context context, int resource, List<ATM> list) {
-        super(context, resource, list);
+    public ListATMAdapter(@NonNull Activity activity, int resource, List<ATM> list) {
+        super(activity, resource, list);
 
         try {
             this.activity = activity;
@@ -58,25 +61,28 @@ public class ListATMAdapter extends ArrayAdapter<ATM> {
     }
 
     public View getView(int position, View convertView, ViewGroup parent) {
+
         View vi = convertView;
-        final ViewHolder holder;
-        try {
-            if (convertView == null) {
-                vi = inflater.inflate(R.layout.list_item_atm, null);
-                holder = new ViewHolder();
+        ViewHolder holder;
 
-                holder.nameATM = (TextView) vi.findViewById(R.id.displayNameTxtView);
-                vi.setTag(holder);
-            } else {
-                holder = (ViewHolder) vi.getTag();
-            }
+        if(convertView==null){
 
-            holder.nameATM.setText(listATMs.get(position).getName());
+            /****** Inflate tabitem.xml file for each row ( Defined below ) *******/
+            vi = inflater.inflate(R.layout.list_item_atm, null);
 
-        } catch (Exception e) {
+            /****** View Holder Object to contain tabitem.xml file elements ******/
 
+            holder = new ViewHolder();
+            holder.nameATM = (TextView) vi.findViewById(R.id.displayNameTxtView);
 
+            /************  Set holder with LayoutInflater ************/
+            vi.setTag( holder );
         }
+        else
+            holder=(ViewHolder)vi.getTag();
+
+        holder.nameATM.setText(listATMs.get(position).getName()); //= (TextView) vi.findViewById(R.id.displayNameTxtView);
+
         return vi;
     }
 }

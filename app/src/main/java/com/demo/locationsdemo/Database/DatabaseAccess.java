@@ -97,4 +97,19 @@ public class DatabaseAccess {
         values.put("pin", user.getPin());
         database.insert("user", null, values);
     }
+
+    public User getUser(){
+
+        User user = new User();
+        Cursor cursor = database.rawQuery("select * from user where id = 1", null);
+        cursor.moveToFirst();
+
+        user.setId(cursor.getInt(0));
+        user.setFirstName(cursor.getString(1));
+        user.setLastName(cursor.getString(2));
+        user.setCardNumber(cursor.getString(3));
+        user.setPin(cursor.getInt(4));
+
+        return user;
+    }
 }
