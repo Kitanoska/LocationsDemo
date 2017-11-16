@@ -5,6 +5,8 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.location.Location;
+import android.util.Log;
 
 import com.demo.locationsdemo.Dao.ATMDao;
 import com.demo.locationsdemo.Entity.ATMEntity;
@@ -75,16 +77,25 @@ public class DatabaseAccess {
         Cursor cursor = database.rawQuery("SELECT * FROM atm", null);
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
-            ATM atmEntity = new ATM();
 
-            atmEntity.setId(cursor.getInt(0));
-            atmEntity.setLongitude(cursor.getString(1));
-            atmEntity.setLatitude(cursor.getString(2));
-            atmEntity.setName(cursor.getString(3));
+            float[] dist = new float[1];
+            double lat = cursor.getDouble(1);
+            double lon = cursor.getDouble(2);
+            Location.distanceBetween(lat, lon, 43.32386, 21.90641, dist);
 
-            list.add(atmEntity);
+            //if(dist[0]<200) {
+
+                ATM atmEntity = new ATM();
+
+                atmEntity.setId(cursor.getInt(0));
+                atmEntity.setLongitude(cursor.getString(2));
+                atmEntity.setLatitude(cursor.getString(1));
+                atmEntity.setName(cursor.getString(3));
+
+                list.add(atmEntity);
+            }
             cursor.moveToNext();
-        }
+        //}
         cursor.close();
         return list;
     }
@@ -95,20 +106,26 @@ public class DatabaseAccess {
         values.put("last_name", user.getLastName());
         values.put("card_number", user.getCardNumber());
         values.put("pin", user.getPin());
-        database.insert("user", null, values);
+        database.execSQL("delete from user");
+        long id = database.insert("user", null, values);
+
     }
 
     public User getUser(){
 
         User user = new User();
-        Cursor cursor = database.rawQuery("select * from user where id = 1", null);
-        cursor.moveToFirst();
+        Cursor cursor = database.rawQuery("select * from user", null);
 
-        user.setId(cursor.getInt(0));
-        user.setFirstName(cursor.getString(1));
-        user.setLastName(cursor.getString(2));
-        user.setCardNumber(cursor.getString(3));
-        user.setPin(cursor.getInt(4));
+        if (cursor.moveToFirst()){
+            do{
+                user.setId(cursor.getInt(0));
+                user.setFirstName(cursor.getString(1));
+                user.setLastName(cursor.getString(2));
+                user.setCardNumber(cursor.getString(3));
+                user.setPin(cursor.getInt(4));
+
+            }while(cursor.moveToNext());
+        }
 
         return user;
     }

@@ -13,6 +13,7 @@ import android.util.Log;
 public class ApplicationClass extends Application{
 
     private static Context context;
+    private static String generatedHashCode;
     final String PREFS_NAME = "FirstStart";
 
     public static Context getContext() {
@@ -48,4 +49,11 @@ public class ApplicationClass extends Application{
         prefs.edit().putBoolean("first_user_data", false).commit();
     }
 
+    public static void setGeneratedCode(String hashCode) {
+        generatedHashCode = hashCode;
+    }
+
+    public static String getGeneratedHashCode(){
+        return generatedHashCode;
+    }
 }

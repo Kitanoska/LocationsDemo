@@ -8,6 +8,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.demo.locationsdemo.Adapters.ListATMAdapter;
+import com.demo.locationsdemo.Helpers.ApplicationClass;
 import com.demo.locationsdemo.Model.ATM;
 import com.demo.locationsdemo.Model.User;
 import com.demo.locationsdemo.Presenters.ATMPresenterImpl;
@@ -23,6 +24,7 @@ public class ATMSNearByActivity extends AppCompatActivity implements ATMView {
     List<ATM> listATMs = new ArrayList<>();
     ListView listView;
     ListATMAdapter listATMAdapter;
+    double code;
 
     private ATMPresenterImpl atmPresenter;
 
@@ -30,8 +32,6 @@ public class ATMSNearByActivity extends AppCompatActivity implements ATMView {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_atm_near);
-        //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        //setSupportActionBar(toolbar);
 
         initViews();
         //load ams from db
@@ -43,9 +43,10 @@ public class ATMSNearByActivity extends AppCompatActivity implements ATMView {
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
 
-                //String itemValue = (String) listView.getItemAtPosition(position);
                 //todo get item with that id from db and pass to method for generatin hash code
-                generateHashCode((ATM)listView.getItemAtPosition(position));
+                double code = generateHashCode((ATM)listView.getItemAtPosition(position));
+                ApplicationClass.setGeneratedCode(String.format("%d",(long)code));
+                finish();
             }
         });
     }
@@ -53,7 +54,6 @@ public class ATMSNearByActivity extends AppCompatActivity implements ATMView {
     private void initViews() {
 
         listView = (ListView) findViewById(R.id.atmsListView);
-
     }
 
     @Override
@@ -73,6 +73,8 @@ public class ATMSNearByActivity extends AppCompatActivity implements ATMView {
         SimpleDateFormat sdf1 = new SimpleDateFormat("mm");
         Long currentHour = Long.parseLong(sdf.format(new Date()));
         Long currentMinute = Long.parseLong(sdf1.format(new Date()));
+        if(currentHour == 0)
+            currentHour = 24l;
 
         //get user data too
         User user = atmPresenter.getUser();
@@ -80,11 +82,10 @@ public class ATMSNearByActivity extends AppCompatActivity implements ATMView {
         Long lastFour = Long.parseLong(user.getCardNumber().substring(user.getCardNumber().length()-4,user.getCardNumber().length()));
         Long pin = Long.valueOf(user.getPin());
 
-        double codeMul = currentHour*currentMinute*pin*lat*lon*cardNumber;
+        double codeMul = (currentHour*100+currentMinute)*pin*lat*lon*cardNumber;
         Long constant = 27182818284l;
         double code = codeMul / constant;
         double result = lastFour*10000+code;
-        Toast.makeText(this,"Generated code "+String.valueOf(result), Toast.LENGTH_LONG).show();
-        return lastFour*10000+code;
+        return lastFour*10000+code%1000;
     }
 }

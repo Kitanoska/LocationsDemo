@@ -47,7 +47,6 @@ public class UsersDataActivity extends AppCompatActivity implements UsersDataVie
                     firstName = String.valueOf(firstNameEditTxt.getText());
                     lastName = String.valueOf(lastNameEditTxt.getText());
                     cardNumber = String.valueOf(cardNumEditTxt.getText());
-
                     pinNumber = Integer.parseInt(String.valueOf(pinEditTxt.getText()));
 
                     usersDataPresenter.saveUsersData(firstName, lastName, cardNumber, pinNumber);
