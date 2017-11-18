@@ -10,6 +10,7 @@ import android.util.Log;
 
 import com.demo.locationsdemo.Dao.ATMDao;
 import com.demo.locationsdemo.Entity.ATMEntity;
+import com.demo.locationsdemo.Helpers.ApplicationClass;
 import com.demo.locationsdemo.Model.ATM;
 import com.demo.locationsdemo.Model.User;
 
@@ -81,9 +82,9 @@ public class DatabaseAccess {
             float[] dist = new float[1];
             double lat = cursor.getDouble(1);
             double lon = cursor.getDouble(2);
-            Location.distanceBetween(lat, lon, 43.32386, 21.90641, dist);
+            Location.distanceBetween(lat, lon, ApplicationClass.getMyLatitude(), ApplicationClass.getMyLongitude(), dist);
 
-            //if(dist[0]<200) {
+            if(dist[0]<20) {
 
                 ATM atmEntity = new ATM();
 
@@ -95,7 +96,7 @@ public class DatabaseAccess {
                 list.add(atmEntity);
             }
             cursor.moveToNext();
-        //}
+        }
         cursor.close();
         return list;
     }

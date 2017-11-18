@@ -27,6 +27,7 @@ import android.support.v4.app.ActivityCompat;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.demo.locationsdemo.Helpers.ApplicationClass;
 import com.demo.locationsdemo.Helpers.BoundLocationManager;
 
 public class LocationActivity extends LifecycleActivity {
@@ -71,8 +72,10 @@ public class LocationActivity extends LifecycleActivity {
     private class MyLocationListener implements LocationListener {
         @Override
         public void onLocationChanged(Location location) {
-            TextView textView = (TextView) findViewById(R.id.location);
-            textView.setText(location.getLatitude() + ", " + location.getLongitude());
+            //TextView textView = (TextView) findViewById(R.id.location);
+            //textView.setText(location.getLatitude() + ", " + location.getLongitude());
+            ApplicationClass.setMyLatitude(location.getLatitude());
+            ApplicationClass.setMyLongitude(location.getLongitude());
         }
 
         @Override

@@ -6,6 +6,8 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
+import java.text.DecimalFormat;
+
 /**
  * Created by Natalija on 11/11/2017.
  */
@@ -14,6 +16,8 @@ public class ApplicationClass extends Application{
 
     private static Context context;
     private static String generatedHashCode;
+    private static double myLongitude;
+    private static double myLatitude;
     final String PREFS_NAME = "FirstStart";
 
     public static Context getContext() {
@@ -56,4 +60,23 @@ public class ApplicationClass extends Application{
     public static String getGeneratedHashCode(){
         return generatedHashCode;
     }
+
+    public static double getMyLongitude() {
+        return myLongitude;
+    }
+
+    public static void setMyLongitude(double myLongitude) {
+        ApplicationClass.myLongitude = myLongitude;
+    }
+
+    public static double getMyLatitude() {
+        return myLatitude;
+    }
+
+    public static void setMyLatitude(double myLatitude) {
+        DecimalFormat df = new DecimalFormat("#.####");
+        myLatitude = Double.valueOf(df.format(myLatitude));
+        ApplicationClass.myLatitude = myLatitude;
+    }
+
 }
