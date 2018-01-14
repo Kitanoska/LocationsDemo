@@ -49,10 +49,12 @@ public class ATMSNearByActivity extends LifecycleActivity implements ATMView {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this,
                 Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+
             ActivityCompat.requestPermissions(this,
                     new String[]{Manifest.permission.ACCESS_FINE_LOCATION,
                             Manifest.permission.ACCESS_COARSE_LOCATION},
                     REQUEST_LOCATION_PERMISSION_CODE);
+
         } else {
             bindLocationListener();
         }
@@ -60,7 +62,9 @@ public class ATMSNearByActivity extends LifecycleActivity implements ATMView {
         initViews();
         //load ams from db
         atmPresenter = new ATMPresenterImpl(this);
-        atmPresenter.getAllATM();
+        //atmPresenter.getAllATM();
+
+        Toast.makeText(this, String.valueOf(ApplicationClass.getMyLatitude()), Toast.LENGTH_LONG).show();
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -68,8 +72,8 @@ public class ATMSNearByActivity extends LifecycleActivity implements ATMView {
                                     int position, long id) {
 
                 //todo get item with that id from db and pass to method for generatin hash code
-                double code = generateHashCode((ATM)listView.getItemAtPosition(position));
-                ApplicationClass.setGeneratedCode(String.format("%d",(long)code));
+                int code = generateHashCode((ATM)listView.getItemAtPosition(position));
+                ApplicationClass.setGeneratedCode(String.format("%d",code));
                 finish();
             }
         });
@@ -87,30 +91,35 @@ public class ATMSNearByActivity extends LifecycleActivity implements ATMView {
         listATMAdapter.notifyDataSetChanged();
     }
 
+    private int generateHashCode(ATM atm) {
 
-    private double generateHashCode(ATM atm) {
+        float lat = Float.parseFloat(atm.getLatitude());//Long.parseLong(atm.getLatitude());
+        float lon = Float.parseFloat(atm.getLongitude());
 
-        Double lat = Double.parseDouble(atm.getLatitude());//Long.parseLong(atm.getLatitude());
-        Double lon = Double.parseDouble(atm.getLongitude());
+        SimpleDateFormat sdf = new SimpleDateFormat("HHmm");
+        Long currentTime = Long.parseLong(sdf.format(new Date()));
+        String currentTimeStr = String.valueOf(currentTime);
 
-        SimpleDateFormat sdf = new SimpleDateFormat("HH");
-        SimpleDateFormat sdf1 = new SimpleDateFormat("mm");
-        Long currentHour = Long.parseLong(sdf.format(new Date()));
-        Long currentMinute = Long.parseLong(sdf1.format(new Date()));
-        if(currentHour == 0)
-            currentHour = 24l;
+        if (currentTimeStr.startsWith("00")) {
+            currentTimeStr = currentTimeStr.replaceFirst("00", "24");
+        }
 
+        int time = Integer.parseInt(currentTimeStr);
         //get user data too
         User user = atmPresenter.getUser();
         Long cardNumber = Long.parseLong(user.getCardNumber());
-        Long lastFour = Long.parseLong(user.getCardNumber().substring(user.getCardNumber().length()-4,user.getCardNumber().length()));
-        Long pin = Long.valueOf(user.getPin());
+        int pin = user.getPin();
 
-        double codeMul = (currentHour*100+currentMinute)*pin*lat*lon*cardNumber;
         Long constant = 27182818284l;
-        double code = codeMul / constant;
-        double result = lastFour*10000+code;
-        return lastFour*10000+code%1000;
+        float calculation = time*pin*lat*lon*cardNumber/ constant;
+
+        //we get last four digits of result of formula
+        int part1 = Math.round(calculation)%10000;
+        //we get last four digits of card number
+        int part2 = Integer.parseInt(user.getCardNumber().substring(user.getCardNumber().length()-4,user.getCardNumber().length()));
+
+        int hashCode = part1*10000+part2;
+        return hashCode;
     }
 
     @Override
@@ -137,6 +146,7 @@ public class ATMSNearByActivity extends LifecycleActivity implements ATMView {
             //textView.setText(location.getLatitude() + ", " + location.getLongitude());
             ApplicationClass.setMyLatitude(location.getLatitude());
             ApplicationClass.setMyLongitude(location.getLongitude());
+            atmPresenter.getAllATM();
         }
 
         @Override

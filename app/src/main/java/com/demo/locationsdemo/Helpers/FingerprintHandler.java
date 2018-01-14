@@ -26,22 +26,27 @@ public class FingerprintHandler extends FingerprintManager.AuthenticationCallbac
 
     private final String TAG = this.getClass().getName();
     private Context context;
+    private boolean canceled = false;
+    CancellationSignal cancellationSignal;
 
     public FingerprintHandler(Context mContext) {
         context = mContext;
     }
 
     public void startAuth(FingerprintManager manager, FingerprintManager.CryptoObject cryptoObject) {
-        CancellationSignal cancellationSignal = new CancellationSignal();
+        cancellationSignal = new CancellationSignal();
         if (ActivityCompat.checkSelfPermission(context, Manifest.permission.USE_FINGERPRINT) != PackageManager.PERMISSION_GRANTED) {
             return;
         }
-        manager.authenticate(cryptoObject, cancellationSignal, 0, this, null);
+
+        //if(canceled)
+            manager.authenticate(cryptoObject, cancellationSignal, 0, this, null);
     }
 
     @Override
     public void onAuthenticationError(int errMsgId, CharSequence errString) {
-        this.update(context.getString(R.string.fingerprintAuthenticationError) + errString, false);
+        if(!canceled)
+            this.update(context.getString(R.string.fingerprintAuthenticationError) + errString, false);
     }
 
     @Override
@@ -65,6 +70,14 @@ public class FingerprintHandler extends FingerprintManager.AuthenticationCallbac
             context.startActivity(generateCodeActivity);
         }
 
+    }
+
+    public void stopListening() {
+        if (cancellationSignal != null) {
+            cancellationSignal.cancel();
+            cancellationSignal = null;
+            canceled = true;
+        }
     }
 
     public void update(String e, Boolean success){

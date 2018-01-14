@@ -84,7 +84,8 @@ public class DatabaseAccess {
             double lon = cursor.getDouble(2);
             Location.distanceBetween(lat, lon, ApplicationClass.getMyLatitude(), ApplicationClass.getMyLongitude(), dist);
 
-            if(dist[0]<20) {
+            //search in radius 50m
+            if(dist[0]<50) {
 
                 ATM atmEntity = new ATM();
 

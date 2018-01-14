@@ -27,8 +27,6 @@ public class GenerateCodeActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent atmsActivity = new Intent(getBaseContext(), ATMSNearByActivity.class);
                 startActivity(atmsActivity);
-                //TODO
-                //odabrati i prikazati one u krugu od 20m
             }
         });
     }
@@ -43,6 +41,5 @@ public class GenerateCodeActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        System.exit(1);
     }
 }

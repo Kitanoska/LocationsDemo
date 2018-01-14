@@ -26,6 +26,10 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.util.Log;
 
+import java.util.List;
+
+import static android.content.Context.LOCATION_SERVICE;
+
 public class BoundLocationManager {
     public static void bindLocationListenerIn(LifecycleOwner lifecycleOwner,
                                               LocationListener listener, Context context) {
@@ -51,13 +55,14 @@ public class BoundLocationManager {
             // https://developers.google.com/android/reference/com/google/android/gms/location/FusedLocationProviderApi
 
             mLocationManager =
-                    (LocationManager) mContext.getSystemService(Context.LOCATION_SERVICE);
+                    (LocationManager) mContext.getSystemService(LOCATION_SERVICE);
             mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, mListener);
+            mLocationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, mListener);
             Log.i("BoundLocationMgr", "Listener added");
 
             // Force an update with the last location, if available.
-            Location lastLocation = mLocationManager.getLastKnownLocation(
-                    LocationManager.GPS_PROVIDER);
+            Location lastLocation = getLastKnownLocation();//mLocationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+
             if (lastLocation != null) {
                 mListener.onLocationChanged(lastLocation);
             }
@@ -72,6 +77,23 @@ public class BoundLocationManager {
             mLocationManager.removeUpdates(mListener);
             mLocationManager = null;
             Log.i("BoundLocationMgr", "Listener removed");
+        }
+
+        private Location getLastKnownLocation() {
+            mLocationManager = (LocationManager)mContext.getSystemService(LOCATION_SERVICE);
+            List<String> providers = mLocationManager.getProviders(true);
+            Location bestLocation = null;
+            for (String provider : providers) {
+                Location l = mLocationManager.getLastKnownLocation(provider);
+                if (l == null) {
+                    continue;
+                }
+                if (bestLocation == null || l.getAccuracy() < bestLocation.getAccuracy()) {
+                    // Found best last known location: %s", l);
+                    bestLocation = l;
+                }
+            }
+            return bestLocation;
         }
     }
 }
