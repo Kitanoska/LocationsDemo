@@ -129,6 +129,7 @@ public class DatabaseAccess {
             }while(cursor.moveToNext());
         }
 
+        cursor.close();
         return user;
     }
 }

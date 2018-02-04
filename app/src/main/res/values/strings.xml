@@ -12,4 +12,11 @@
     <string name="fingerprintAuthenticationError">Fingerprint Authentication error\n</string>
     <string name="fingerprintAuthenticationHelp">Fingerprint Authentication help\n</string>
     <string name="fingerprintAuthenticationFailed">Fingerprint Authentication failed. Try again.</string>
+
+    <!-- Dialogs -->
+    <string name="locationDialogText">To continue, let your device turn on location</string>
+    <string name="titleLocatioDialogText">Use Google\'s location service?</string>
+    <string name="agree">Agree</string>
+    <string name="disagree">Disagree</string>
+
 </resources>

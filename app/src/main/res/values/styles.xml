@@ -3,13 +3,22 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorPrimary">#FFCC00</item>
+        <item name="colorPrimaryDark">@color/colorButtonText</item>
+        <item name="colorAccent">#FFCC00</item>
+        <item name="alertDialogTheme">@style/AppCompatAlertDialogStyle</item>
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="AppCompatAlertDialogStyle" parent = "Theme.AppCompat.Light.Dialog.Alert">
+
+        <item name="android:textColor">@color/colorButtonText</item>
+        <item name="android:textColorPrimary">@color/colorButtonText</item>
+        <item name="android:windowBackground">@android:color/white</item>
+
+    </style>
 
 </resources>

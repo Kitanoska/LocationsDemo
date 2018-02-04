@@ -69,7 +69,7 @@ public class BoundLocationManager {
         }
 
 
-        @OnLifecycleEvent(Lifecycle.Event.ON_PAUSE)
+        @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
         void removeLocationListener() {
             if (mLocationManager == null) {
                 return;

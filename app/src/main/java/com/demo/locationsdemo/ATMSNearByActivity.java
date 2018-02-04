@@ -27,16 +27,16 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class ATMSNearByActivity extends LifecycleActivity implements ATMView {
+public class ATMSNearByActivity extends AppCompatActivity /*extends LifecycleActivity */implements ATMView {
 
     List<ATM> listATMs = new ArrayList<>();
     ListView listView;
     ListATMAdapter listATMAdapter;
     double code;
 
-    private static final int REQUEST_LOCATION_PERMISSION_CODE = 1;
+    //private static final int REQUEST_LOCATION_PERMISSION_CODE = 1;
 
-    private LocationListener mGpsListener = new ATMSNearByActivity.MyLocationListener();
+    //private LocationListener mGpsListener = new ATMSNearByActivity.MyLocationListener();
 
     private ATMPresenterImpl atmPresenter;
 
@@ -45,7 +45,7 @@ public class ATMSNearByActivity extends LifecycleActivity implements ATMView {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_atm_near);
 
-        //////PERMISIONS LOCATION//////
+        /*//////PERMISIONS LOCATION//////
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this,
                 Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -57,12 +57,12 @@ public class ATMSNearByActivity extends LifecycleActivity implements ATMView {
 
         } else {
             bindLocationListener();
-        }
+        }*/
 
         initViews();
         //load ams from db
         atmPresenter = new ATMPresenterImpl(this);
-        //atmPresenter.getAllATM();
+        atmPresenter.getAllATM();
 
         Toast.makeText(this, String.valueOf(ApplicationClass.getMyLatitude()), Toast.LENGTH_LONG).show();
 
@@ -113,8 +113,11 @@ public class ATMSNearByActivity extends LifecycleActivity implements ATMView {
         Long constant = 27182818284l;
         float calculation = time*pin*lat*lon*cardNumber/ constant;
 
-        //we get last four digits of result of formula
-        int part1 = Math.round(calculation)%10000;
+        Long resLongPart1 = (long) calculation;
+        String part1Str = resLongPart1.toString();
+        part1Str = part1Str.substring(part1Str.length() - 4, part1Str.length());
+
+        int part1 = Integer.parseInt(part1Str);
         //we get last four digits of card number
         int part2 = Integer.parseInt(user.getCardNumber().substring(user.getCardNumber().length()-4,user.getCardNumber().length()));
 
@@ -122,6 +125,7 @@ public class ATMSNearByActivity extends LifecycleActivity implements ATMView {
         return hashCode;
     }
 
+    /*
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
                                            @NonNull int[] grantResults) {
@@ -162,6 +166,6 @@ public class ATMSNearByActivity extends LifecycleActivity implements ATMView {
         @Override
         public void onProviderDisabled(String provider) {
         }
-    }
+    } */
 
 }
