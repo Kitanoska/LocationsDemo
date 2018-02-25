@@ -54,7 +54,6 @@ public class DatabaseAccess {
      * Open the database connection.
      */
     public void open() throws IOException{
-        //this.database = openHelper.getWritableDatabase();
         openHelper.createDataBase();
         this.database = openHelper.openDataBase();
     }
@@ -73,7 +72,7 @@ public class DatabaseAccess {
      *
      * @return a List of atms
      */
-    public List<ATM> getAllAtm() {
+    public List<ATM> getAllAtmNear(Location myCurrentLoc) {
         List<ATM> list = new ArrayList<>();
         Cursor cursor = database.rawQuery("SELECT * FROM atm", null);
         cursor.moveToFirst();
@@ -82,7 +81,7 @@ public class DatabaseAccess {
             float[] dist = new float[1];
             double lat = cursor.getDouble(1);
             double lon = cursor.getDouble(2);
-            Location.distanceBetween(lat, lon, ApplicationClass.getMyLatitude(), ApplicationClass.getMyLongitude(), dist);
+            Location.distanceBetween(lat, lon, myCurrentLoc.getLatitude(), myCurrentLoc.getLongitude(), dist);
 
             //search in radius 50m
             if(dist[0]<50) {
@@ -93,6 +92,7 @@ public class DatabaseAccess {
                 atmEntity.setLongitude(cursor.getString(2));
                 atmEntity.setLatitude(cursor.getString(1));
                 atmEntity.setName(cursor.getString(3));
+                atmEntity.setDistance(ApplicationClass.round(dist[0],2));
 
                 list.add(atmEntity);
             }
@@ -109,7 +109,7 @@ public class DatabaseAccess {
         values.put("card_number", user.getCardNumber());
         values.put("pin", user.getPin());
         database.execSQL("delete from user");
-        long id = database.insert("user", null, values);
+        long id =database.insert("user", null, values);
 
     }
 
@@ -131,5 +131,17 @@ public class DatabaseAccess {
 
         cursor.close();
         return user;
+    }
+
+    public void insertATM(String longitude, String latitude, String name) {
+
+        ContentValues values = new ContentValues();
+        values.put("latitude", latitude);
+        values.put("longitude", longitude);
+        values.put("name", name);
+        long id = database.insertOrThrow("atm", null, values);
+        if (id != -1)
+            Log.v("DATABASE", "INSERTED");
+        else Log.e("DATABASE", "NOT INSERTED");
     }
 }

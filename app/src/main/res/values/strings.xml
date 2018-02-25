@@ -18,5 +18,6 @@
     <string name="titleLocatioDialogText">Use Google\'s location service?</string>
     <string name="agree">Agree</string>
     <string name="disagree">Disagree</string>
+    <string name="title_activity_main44">MainActivity44</string>
 
 </resources>

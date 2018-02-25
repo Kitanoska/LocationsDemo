@@ -74,8 +74,8 @@ public class LocationActivity extends LifecycleActivity {
         public void onLocationChanged(Location location) {
             //TextView textView = (TextView) findViewById(R.id.location);
             //textView.setText(location.getLatitude() + ", " + location.getLongitude());
-            ApplicationClass.setMyLatitude(location.getLatitude());
-            ApplicationClass.setMyLongitude(location.getLongitude());
+            //ApplicationClass.setMyLatitude(location.getLatitude());
+            //ApplicationClass.setMyLongitude(location.getLongitude());
         }
 
         @Override

@@ -1,16 +1,24 @@
 package com.demo.locationsdemo;
 
 import android.Manifest;
+import android.arch.lifecycle.Lifecycle;
 import android.arch.lifecycle.LifecycleActivity;
+import android.arch.lifecycle.LifecycleOwner;
+import android.arch.lifecycle.LifecycleRegistry;
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -27,12 +35,19 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class ATMSNearByActivity extends AppCompatActivity /*extends LifecycleActivity */implements ATMView {
+public class ATMSNearByActivity extends AppCompatActivity /*extends LifecycleActivity */implements ATMView, LifecycleOwner {
 
     List<ATM> listATMs = new ArrayList<>();
     ListView listView;
     ListATMAdapter listATMAdapter;
     double code;
+    private UsersLocationViewModel usersLocationViewModel;
+    //private LifecycleRegistry mLifecycleRegistry;
+
+    //JUST FOR DEMO REMOVE AFTER
+    Button addNewAtm, refreshBtn;
+
+    /////////////////////////////
 
     //private static final int REQUEST_LOCATION_PERMISSION_CODE = 1;
 
@@ -44,6 +59,9 @@ public class ATMSNearByActivity extends AppCompatActivity /*extends LifecycleAct
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_atm_near);
+
+       // mLifecycleRegistry = new LifecycleRegistry(this);
+       // mLifecycleRegistry.markState(Lifecycle.State.CREATED);
 
         /*//////PERMISIONS LOCATION//////
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
@@ -60,11 +78,13 @@ public class ATMSNearByActivity extends AppCompatActivity /*extends LifecycleAct
         }*/
 
         initViews();
+        //setUpObservers();
+
         //load ams from db
         atmPresenter = new ATMPresenterImpl(this);
-        atmPresenter.getAllATM();
+        atmPresenter.getAllATMNear(ApplicationClass.currentLocation.getCurrentLocation());
 
-        Toast.makeText(this, String.valueOf(ApplicationClass.getMyLatitude()), Toast.LENGTH_LONG).show();
+        //ApplicationClass.currentLocation.setListener(()->atmPresenter.getAllATMNear(ApplicationClass.currentLocation.getCurrentLocation()));
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -77,18 +97,61 @@ public class ATMSNearByActivity extends AppCompatActivity /*extends LifecycleAct
                 finish();
             }
         });
+
+        //Just for demo remove after
+        addNewAtm.setOnClickListener(view ->{
+            Intent i = new Intent(this, AddATMActivity.class);
+            startActivity(i);
+        });
+
+        refreshBtn.setOnClickListener(view->{atmPresenter.getAllATMNear(ApplicationClass.currentLocation.getCurrentLocation());});
+
+
+
     }
 
     private void initViews() {
 
+        //just for demo remove after this button
+        addNewAtm = (Button) findViewById(R.id.addATMBtn);
+        refreshBtn = (Button) findViewById(R.id.refreshBtn);
         listView = (ListView) findViewById(R.id.atmsListView);
+        //usersLocationViewModel = ViewModelProviders.of(this).get(UsersLocationViewModel.class);
+        ApplicationClass.currentLocation.setListener(new LocationChangeVariable.ChangeListener() {
+            @Override
+            public void onChange() {
+               atmPresenter.getAllATMNear(ApplicationClass.currentLocation.getCurrentLocation());
+            }
+        });
     }
+
+   /* private void setUpObservers(){
+
+        // Create the observer which updates the UI.
+        final Observer<Location> nameObserver = new Observer<Location>() {
+            @Override
+            public void onChanged(@Nullable final Location currentLoc) {
+                // Update the UI, in this case check again in db for list of atms and display them.
+                atmPresenter.getAllATMNear(currentLoc);
+            }
+        };
+
+        // Observe the LiveData, passing in this activity as the LifecycleOwner and the observer.
+        usersLocationViewModel.getCurrentUsersLocation().observe(this, nameObserver);
+
+    }*/
 
     @Override
     public void displayListOfATMs(List<ATM> atmList) {
         listATMAdapter = new ListATMAdapter(this,0, atmList);
         listView.setAdapter(listATMAdapter);
         listATMAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        atmPresenter.getAllATMNear(ApplicationClass.currentLocation.getCurrentLocation());
     }
 
     private int generateHashCode(ATM atm) {
@@ -123,6 +186,19 @@ public class ATMSNearByActivity extends AppCompatActivity /*extends LifecycleAct
 
         int hashCode = part1*10000+part2;
         return hashCode;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+       // mLifecycleRegistry.markState(Lifecycle.State.STARTED);
+    }
+
+    @NonNull
+    @Override
+    public Lifecycle getLifecycle() {
+        //return mLifecycleRegistry;
+        return null;
     }
 
     /*

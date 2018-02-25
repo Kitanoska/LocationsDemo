@@ -58,6 +58,7 @@ public class ListATMAdapter extends ArrayAdapter<ATM> {
 
     public static class ViewHolder {
         public TextView nameATM;
+        public TextView distance;
     }
 
     public View getView(int position, View convertView, ViewGroup parent) {
@@ -74,6 +75,7 @@ public class ListATMAdapter extends ArrayAdapter<ATM> {
 
             holder = new ViewHolder();
             holder.nameATM = (TextView) vi.findViewById(R.id.displayNameTxtView);
+            holder.distance = (TextView) vi.findViewById(R.id.distanceTxtView);
 
             /************  Set holder with LayoutInflater ************/
             vi.setTag( holder );
@@ -82,6 +84,7 @@ public class ListATMAdapter extends ArrayAdapter<ATM> {
             holder=(ViewHolder)vi.getTag();
 
         holder.nameATM.setText(listATMs.get(position).getName()); //= (TextView) vi.findViewById(R.id.displayNameTxtView);
+        holder.distance.setText(String.valueOf(listATMs.get(position).getDistance())+" meters");
 
         return vi;
     }

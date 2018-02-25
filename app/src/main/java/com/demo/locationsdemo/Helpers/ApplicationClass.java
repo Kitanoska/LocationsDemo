@@ -3,9 +3,13 @@ package com.demo.locationsdemo.Helpers;
 import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.location.Location;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
+import com.demo.locationsdemo.LocationChangeVariable;
+
+import java.math.BigDecimal;
 import java.text.DecimalFormat;
 
 /**
@@ -16,8 +20,9 @@ public class ApplicationClass extends Application{
 
     private static Context context;
     private static String generatedHashCode;
-    private static double myLongitude;
-    private static double myLatitude;
+    public static LocationChangeVariable currentLocation;
+    //private static double myLongitude;
+    //private static double myLatitude;
     final String PREFS_NAME = "FirstStart";
 
     public static Context getContext() {
@@ -28,6 +33,7 @@ public class ApplicationClass extends Application{
     public void onCreate() {
         super.onCreate();
         context = getApplicationContext();
+        currentLocation = new LocationChangeVariable();
     }
 
     /**
@@ -61,7 +67,7 @@ public class ApplicationClass extends Application{
         return generatedHashCode;
     }
 
-    public static double getMyLongitude() {
+    /*public static double getMyLongitude() {
         return myLongitude;
     }
 
@@ -77,6 +83,12 @@ public class ApplicationClass extends Application{
         DecimalFormat df = new DecimalFormat("#.####");
         myLatitude = Double.valueOf(df.format(myLatitude));
         ApplicationClass.myLatitude = myLatitude;
+    }*/
+
+    public static float round(float d, int decimalPlace) {
+        BigDecimal bd = new BigDecimal(Float.toString(d));
+        bd = bd.setScale(decimalPlace, BigDecimal.ROUND_HALF_UP);
+        return bd.floatValue();
     }
 
 }

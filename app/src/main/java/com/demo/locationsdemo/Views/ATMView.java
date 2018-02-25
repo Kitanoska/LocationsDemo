@@ -1,5 +1,8 @@
 package com.demo.locationsdemo.Views;
 
+import android.arch.lifecycle.LiveData;
+import android.location.Location;
+
 import com.demo.locationsdemo.Entity.ATMEntity;
 import com.demo.locationsdemo.Model.ATM;
 

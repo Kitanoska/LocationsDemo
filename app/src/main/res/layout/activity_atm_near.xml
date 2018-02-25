@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="10dp"
@@ -7,19 +7,48 @@
     android:orientation="vertical" >
 
     <TextView
+        android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingBottom="@dimen/list_padding"
-        android:textSize="20dp"
+        android:textSize="20sp"
         android:text="These are ATM's near you. Select AMT for which you want to generate code: "/>
 
     <ListView
+        android:layout_below="@id/title"
+        android:layout_above="@id/refreshBtn"
         android:id="@+id/atmsListView"
         android:padding="@dimen/list_padding"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        android:divider="#00000000"
+        android:divider="@android:color/white"
+        android:dividerHeight="1dp"
         >
     </ListView>
 
-</LinearLayout>
+    <Button
+        android:id="@+id/addATMBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/button_background"
+        android:text="ATM"
+        android:textSize="@dimen/fontSize2"
+        android:textColor="@color/colorButtonText"
+        android:layout_marginBottom="2dp"
+        />
+
+    <Button
+        android:id="@+id/refreshBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:background="@drawable/button_background"
+        android:text="Refresh"
+        android:textSize="@dimen/fontSize2"
+        android:textColor="@color/colorButtonText"
+        android:layout_marginBottom="2dp"
+        />
+
+</RelativeLayout>

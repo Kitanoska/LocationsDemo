@@ -1,5 +1,7 @@
 package com.demo.locationsdemo.Presenters;
 
+import android.location.Location;
+
 import com.demo.locationsdemo.Model.User;
 
 /**
@@ -8,6 +10,6 @@ import com.demo.locationsdemo.Model.User;
 
 public interface ATMPresenter {
 
-    public void getAllATM();
+    public void getAllATMNear(Location currentLocation);
     public User getUser();
 }

@@ -1,5 +1,6 @@
 package com.demo.locationsdemo.Presenters;
 
+import android.location.Location;
 import android.os.AsyncTask;
 
 import com.demo.locationsdemo.Database.DatabaseAccess;
@@ -26,7 +27,7 @@ public class ATMPresenterImpl implements  ATMPresenter{
     }
 
     @Override
-    public void getAllATM() {
+    public void getAllATMNear(Location currentLocation) {
 
         //TODO swith to async task class
         /*AsyncTask.execute(new Runnable() {
@@ -45,7 +46,7 @@ public class ATMPresenterImpl implements  ATMPresenter{
             //TODO
             //atmView.displayError
         }
-        List<ATM> atmsList = databaseAccess.getAllAtm();
+        List<ATM> atmsList = databaseAccess.getAllAtmNear(currentLocation);
         databaseAccess.close();
 
         atmView.displayListOfATMs(atmsList);

@@ -2,6 +2,7 @@ package com.demo.locationsdemo;
 
 import android.Manifest;
 import android.arch.lifecycle.LifecycleActivity;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -14,6 +15,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -27,6 +29,7 @@ public class GenerateCodeActivity extends LifecycleActivity /*extends AppCompatA
     private TextView generatedCodeTextView, infoTExtView;
     private static final int REQUEST_LOCATION_PERMISSION_CODE = 1;
     private LocationListener mGpsListener = new GenerateCodeActivity.MyLocationListener();
+    private UsersLocationViewModel usersLocationViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +57,7 @@ public class GenerateCodeActivity extends LifecycleActivity /*extends AppCompatA
         Button generateCodeBtn = (Button) this.findViewById(R.id.generateCodeBtn);
         generatedCodeTextView = (TextView) this.findViewById(R.id.generatedCodeTextView);
         infoTExtView = (TextView) this.findViewById(R.id.infoTextView);
+        usersLocationViewModel = ViewModelProviders.of(this).get(UsersLocationViewModel.class);
 
         generateCodeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -97,7 +101,7 @@ public class GenerateCodeActivity extends LifecycleActivity /*extends AppCompatA
                 && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
             bindLocationListener();
         } else {
-            Toast.makeText(this, "This sample requires Location access", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "This requires Location access", Toast.LENGTH_LONG).show();
         }
     }
 
@@ -132,13 +136,21 @@ public class GenerateCodeActivity extends LifecycleActivity /*extends AppCompatA
 
     //TODO move separately
     private class MyLocationListener implements LocationListener {
+
+        private String TAG = "Location Listener";
+
         @Override
         public void onLocationChanged(Location location) {
             //TextView textView = (TextView) findViewById(R.id.location);
             //textView.setText(location.getLatitude() + ", " + location.getLongitude());
-            ApplicationClass.setMyLatitude(location.getLatitude());
-            ApplicationClass.setMyLongitude(location.getLongitude());
+            Log.v(TAG,"LocationChanged");
+            //ApplicationClass.setMyLatitude(location.getLatitude());
+            //ApplicationClass.setMyLongitude(location.getLongitude());
+
+            //update live data
+            //usersLocationViewModel.getCurrentUsersLocation().setValue(location);
             //atmPresenter.getAllATM();
+            ApplicationClass.currentLocation.setCurrentLocation(location);
         }
 
         @Override

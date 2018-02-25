@@ -24,7 +24,9 @@
                 <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
             </intent-filter>
         </activity>
-        <activity android:name=".SignInActivity" android:noHistory="true">
+        <activity
+            android:name=".SignInActivity"
+            android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -41,12 +43,12 @@
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".ATMSNearByActivity">
+        <activity android:name=".ATMSNearByActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
+        <activity android:name=".AddATMActivity"></activity>
     </application>
 
 </manifest>

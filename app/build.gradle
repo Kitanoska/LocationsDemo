@@ -7,7 +7,7 @@ android {
         applicationId "com.demo.locationsdemo"
         minSdkVersion 23
         targetSdkVersion 25
-        versionCode 3
+        versionCode 4
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
@@ -21,6 +21,10 @@ android {
 
     dataBinding {
         enabled = true
+    }
+    compileOptions {
+        targetCompatibility 1.8
+        sourceCompatibility 1.8
     }
 }
 

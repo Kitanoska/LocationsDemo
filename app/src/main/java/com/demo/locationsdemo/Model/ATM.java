@@ -10,6 +10,7 @@ public class ATM {
     private String longitude;
     private String latitude;
     private String name;
+    private float distance;
 
     public ATM(){}
 
@@ -45,4 +46,11 @@ public class ATM {
         this.name = name;
     }
 
+    public float getDistance() {
+        return distance;
+    }
+
+    public void setDistance(float distance) {
+        this.distance = distance;
+    }
 }
