@@ -14,5 +14,6 @@ import java.util.List;
 
 public interface ATMView {
 
-    public void displayListOfATMs(List<ATM> atmList);
+    void displayListOfATMs(List<ATM> atmList);
+    void displayError(String message);
 }

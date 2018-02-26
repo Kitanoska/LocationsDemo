@@ -1,4 +1,4 @@
-package com.demo.locationsdemo;
+package com.demo.locationsdemo.Activity;
 
 import android.Manifest;
 import android.annotation.TargetApi;
@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import com.demo.locationsdemo.Helpers.ApplicationClass;
 import com.demo.locationsdemo.Helpers.FingerprintHandler;
+import com.demo.locationsdemo.R;
 
 import java.io.IOException;
 import java.security.InvalidAlgorithmParameterException;

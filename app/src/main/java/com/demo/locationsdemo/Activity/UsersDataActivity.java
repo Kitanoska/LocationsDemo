@@ -1,4 +1,4 @@
-package com.demo.locationsdemo;
+package com.demo.locationsdemo.Activity;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.demo.locationsdemo.Helpers.ApplicationClass;
 import com.demo.locationsdemo.Presenters.UsersDataPresenterImpl;
+import com.demo.locationsdemo.R;
 import com.demo.locationsdemo.Views.UsersDataView;
 
 public class UsersDataActivity extends AppCompatActivity implements UsersDataView {
@@ -73,5 +74,10 @@ public class UsersDataActivity extends AppCompatActivity implements UsersDataVie
         Intent generateCodeActivity = new Intent(this,GenerateCodeActivity.class);
         startActivity(generateCodeActivity);
         Log.i(TAG,"Fingerprint Authentication succeeded.");
+    }
+
+    @Override
+    public void displayError(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 }

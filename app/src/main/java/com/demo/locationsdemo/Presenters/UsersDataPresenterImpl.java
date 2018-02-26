@@ -17,9 +17,12 @@ import java.util.List;
 public class UsersDataPresenterImpl implements UserDataPresenter{
 
     private UsersDataView usersDataView;
+    DatabaseAccess databaseAccess;
+
 
     public UsersDataPresenterImpl(UsersDataView usrDataView){
         usersDataView = usrDataView;
+        databaseAccess = DatabaseAccess.getInstance(ApplicationClass.getContext());
     }
 
     @Override
@@ -35,14 +38,12 @@ public class UsersDataPresenterImpl implements UserDataPresenter{
             @Override
             public void run() {
                 //AppDatabase.getAppDatabase(ApplicationClass.getContext()).userDao().insertUsersData(user); //ROOM
-                DatabaseAccess databaseAccess = DatabaseAccess.getInstance(ApplicationClass.getContext());
 
                 try {
                     databaseAccess.open();
                 } catch (IOException e) {
                     e.printStackTrace();
-                    //TODO
-                    //usersDataView.displayError();
+                    usersDataView.displayError("Could not access database");
                 }
                 databaseAccess.insertUser(user);
                 databaseAccess.close();
@@ -53,13 +54,11 @@ public class UsersDataPresenterImpl implements UserDataPresenter{
 
     @Override
     public User getUser() {
-        DatabaseAccess databaseAccess = DatabaseAccess.getInstance(ApplicationClass.getContext());
         try {
             databaseAccess.open();
         } catch (IOException e) {
             e.printStackTrace();
-            //TODO
-            //usersDataView.displayError();
+            usersDataView.displayError("Could not access database");
         }
         User user = databaseAccess.getUser();
         databaseAccess.close();

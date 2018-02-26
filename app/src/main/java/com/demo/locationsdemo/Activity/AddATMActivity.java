@@ -1,4 +1,4 @@
-package com.demo.locationsdemo;
+package com.demo.locationsdemo.Activity;
 
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
@@ -9,9 +9,9 @@ import android.widget.Toast;
 
 import com.demo.locationsdemo.Database.DatabaseAccess;
 import com.demo.locationsdemo.Helpers.ApplicationClass;
+import com.demo.locationsdemo.R;
 
 import java.io.IOException;
-import java.util.Random;
 
 public class AddATMActivity extends AppCompatActivity {
 

@@ -8,15 +8,14 @@ import android.content.pm.PackageManager;
 import android.hardware.fingerprint.FingerprintManager;
 import android.os.CancellationSignal;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
-import com.demo.locationsdemo.GenerateCodeActivity;
+import com.demo.locationsdemo.Activity.GenerateCodeActivity;
 import com.demo.locationsdemo.R;
-import com.demo.locationsdemo.UsersDataActivity;
+import com.demo.locationsdemo.Activity.UsersDataActivity;
 
 /**
  * Created by Natalija on 11/1/2017.

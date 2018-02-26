@@ -10,6 +10,5 @@ import com.demo.locationsdemo.Model.User;
 
 public interface ATMPresenter {
 
-    public void getAllATMNear(Location currentLocation);
-    public User getUser();
+    void getAllATMNear(Location currentLocation);
 }

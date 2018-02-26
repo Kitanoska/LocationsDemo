@@ -10,7 +10,7 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:background="@drawable/gradient_background"
     android:orientation="vertical"
-    tools:context="com.demo.locationsdemo.GenerateCodeActivity">
+    tools:context="com.demo.locationsdemo.Activity.GenerateCodeActivity">
 
     <LinearLayout
         android:layout_width="match_parent"

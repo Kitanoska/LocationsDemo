@@ -21,14 +21,15 @@ import java.util.List;
 public class ATMPresenterImpl implements  ATMPresenter{
 
     private ATMView atmView;
+    private DatabaseAccess databaseAccess;
 
     public ATMPresenterImpl(ATMView view){
         this.atmView = view;
+        databaseAccess = DatabaseAccess.getInstance(ApplicationClass.getContext());
     }
 
     @Override
     public void getAllATMNear(Location currentLocation) {
-
         //TODO swith to async task class
         /*AsyncTask.execute(new Runnable() {
             @Override
@@ -37,35 +38,16 @@ public class ATMPresenterImpl implements  ATMPresenter{
             }
         }); */
 
-
-        DatabaseAccess databaseAccess = DatabaseAccess.getInstance(ApplicationClass.getContext());
         try {
             databaseAccess.open();
         } catch (IOException e) {
             e.printStackTrace();
-            //TODO
-            //atmView.displayError
+            atmView.displayError("Could not access database");
         }
+
         List<ATM> atmsList = databaseAccess.getAllAtmNear(currentLocation);
         databaseAccess.close();
-
         atmView.displayListOfATMs(atmsList);
-    }
-
-    @Override
-    public User getUser() {
-        DatabaseAccess databaseAccess = DatabaseAccess.getInstance(ApplicationClass.getContext());
-        try {
-            databaseAccess.open();
-        } catch (IOException e) {
-            e.printStackTrace();
-            //TODO
-            //usersDataView.displayError();
-        }
-        User user = databaseAccess.getUser();
-        databaseAccess.close();
-
-        return user;
     }
 
 }

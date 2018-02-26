@@ -10,7 +10,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:background="@drawable/gradient_background"
-    tools:context="com.demo.locationsdemo.SignInActivity">
+    tools:context="com.demo.locationsdemo.Activity.SignInActivity">
 
     <LinearLayout
         android:layout_width="match_parent"

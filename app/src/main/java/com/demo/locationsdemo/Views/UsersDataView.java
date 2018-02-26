@@ -7,5 +7,5 @@ package com.demo.locationsdemo.Views;
 public interface UsersDataView {
 
     void openNextScreen();
-
+    void displayError(String message);
 }
