@@ -100,6 +100,7 @@ public class GenerateCodeActivity extends LifecycleActivity /*extends AppCompatA
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+        finish();
     }
 
     @Override

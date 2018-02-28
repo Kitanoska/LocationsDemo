@@ -12,6 +12,7 @@
         android:layout_height="wrap_content"
         android:paddingBottom="@dimen/list_padding"
         android:textSize="20sp"
+        android:textColor="@android:color/white"
         android:text="These are ATM's near you. Select AMT for which you want to generate code: "/>
 
     <ListView

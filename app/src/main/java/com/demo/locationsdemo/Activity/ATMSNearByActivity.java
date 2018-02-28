@@ -18,11 +18,13 @@ import com.demo.locationsdemo.Presenters.ATMPresenterImpl;
 import com.demo.locationsdemo.Presenters.UsersDataPresenterImpl;
 import com.demo.locationsdemo.R;
 import com.demo.locationsdemo.Views.ATMView;
+import com.demo.locationsdemo.Views.UsersDataView;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-public class ATMSNearByActivity extends AppCompatActivity implements ATMView {
+public class ATMSNearByActivity extends AppCompatActivity implements ATMView, UsersDataView {
 
     ListView listView;
     ListATMAdapter listATMAdapter;
@@ -44,6 +46,7 @@ public class ATMSNearByActivity extends AppCompatActivity implements ATMView {
 
         //load ams from db
         atmPresenter = new ATMPresenterImpl(this);
+        usersDataPresenterImpl = new UsersDataPresenterImpl(this);
         atmPresenter.getAllATMNear(ApplicationClass.currentLocation.getCurrentLocation());
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -102,6 +105,11 @@ public class ATMSNearByActivity extends AppCompatActivity implements ATMView {
         listATMAdapter = new ListATMAdapter(this,0, atmList);
         listView.setAdapter(listATMAdapter);
         listATMAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void openNextScreen() {
+        //Nothing should be here
     }
 
     @Override
