@@ -17,7 +17,6 @@
 
     <ListView
         android:layout_below="@id/title"
-        android:layout_above="@id/refreshBtn"
         android:id="@+id/atmsListView"
         android:padding="@dimen/list_padding"
         android:layout_height="wrap_content"
@@ -39,7 +38,7 @@
         android:layout_marginBottom="2dp"
         />
 
-    <Button
+   <!-- <Button
         android:id="@+id/refreshBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -50,6 +49,6 @@
         android:textSize="@dimen/fontSize2"
         android:textColor="@color/colorButtonText"
         android:layout_marginBottom="2dp"
-        />
+        />-->
 
 </RelativeLayout>

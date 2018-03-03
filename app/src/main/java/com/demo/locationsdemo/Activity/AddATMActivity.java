@@ -18,6 +18,7 @@ public class AddATMActivity extends AppCompatActivity {
     private EditText lonEditTxt, latEditTxt, nameEditTxt;
     private String longitude, latitude, name; /*="ATM ERSTE " + new Random().nextInt(99);*/
     private Button addBtn;
+    //private DatabaseAccess databaseAccess;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,9 +51,9 @@ public class AddATMActivity extends AppCompatActivity {
 
                     }
                     databaseAccess.insertATM(longitude, latitude, name);
-                    databaseAccess.close();
+                    //databaseAccess.close();
 
-                    Toast.makeText(AddATMActivity.this,"New ATM added", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(AddATMActivity.this,"New ATM added", Toast.LENGTH_SHORT).show();
 
                     AddATMActivity.this.finish();
                 }

@@ -55,16 +55,16 @@ public class DatabaseAccess {
      */
     public void open() throws IOException{
         openHelper.createDataBase();
-        this.database = openHelper.openDataBase();
+        database = openHelper.openDataBase();
     }
 
     /**
      * Close the database connection.
      */
     public void close() {
-        if (database != null) {
-            this.database.close();
-        }
+        /*if (database != null) {
+            database.close();
+        }*/
     }
 
     /**
@@ -139,9 +139,20 @@ public class DatabaseAccess {
         values.put("latitude", latitude);
         values.put("longitude", longitude);
         values.put("name", name);
-        long id = database.insertOrThrow("atm", null, values);
-        if (id != -1)
+        try {
+            if(!database.isOpen())
+            {
+                database = openHelper.openDataBase();
+
+            }
+            long id = database.insert("atm", null, values);
+
+        }catch(Exception e){
+            Log.v("DATABASE", e.getMessage());
+        }
+
+        /*if (id != -1)
             Log.v("DATABASE", "INSERTED");
-        else Log.e("DATABASE", "NOT INSERTED");
+        else Log.e("DATABASE", "NOT INSERTED");*/
     }
 }

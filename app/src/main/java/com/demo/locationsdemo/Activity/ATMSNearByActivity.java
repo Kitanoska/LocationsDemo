@@ -34,7 +34,7 @@ public class ATMSNearByActivity extends AppCompatActivity implements ATMView, Us
     private UsersDataPresenterImpl usersDataPresenterImpl;
 
     //JUST FOR DEMO REMOVE AFTER
-    Button addNewAtm, refreshBtn;
+    Button addNewAtm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,7 +73,6 @@ public class ATMSNearByActivity extends AppCompatActivity implements ATMView, Us
 
         //just for demo remove after this button
         addNewAtm = (Button) findViewById(R.id.addATMBtn);
-        refreshBtn = (Button) findViewById(R.id.refreshBtn);
         listView = (ListView) findViewById(R.id.atmsListView);
         //usersLocationViewModel = ViewModelProviders.of(this).get(UsersLocationViewModel.class);
         ApplicationClass.currentLocation.setListener(new LocationChangeVariable.ChangeListener() {

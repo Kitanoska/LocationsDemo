@@ -165,7 +165,17 @@ public class SignInActivity extends AppCompatActivity {
             }else{
                 // Check whether at least one fingerprint is registered
                 if (!fingerprintManager.hasEnrolledFingerprints()) {
-                    textView.setText("Register at least one fingerprint in Settings");
+                    //User hasn't enrolled any fingerprints to authenticate with
+                    //textView.setText("Register at least one fingerprint in Settings");
+                    //JUST FOR TEST!!! OVDE DODATI EKRAN ZA UNOS PINA
+                    if(ApplicationClass.isAppFirstStarted()) {
+                        Intent userDataActivity = new Intent(this, UsersDataActivity.class);
+                        startActivity(userDataActivity);
+                    }else{
+                        Intent generateCodeActivity = new Intent(this, GenerateCodeActivity.class);
+                        startActivity(generateCodeActivity);
+                    }
+                    //////////////////END TEST/////////////////////
                 }else{
                     // Checks whether lock screen security is enabled or not
                     if (!keyguardManager.isKeyguardSecure()) {
@@ -196,6 +206,7 @@ public class SignInActivity extends AppCompatActivity {
         super.onPause();
         Log.i("TEST","pause");
         //cancel fingertip listening
-        helper.stopListening();
+        if(helper != null)
+            helper.stopListening();
     }
 }
